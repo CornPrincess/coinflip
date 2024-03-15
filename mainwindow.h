@@ -15,6 +15,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // overwrite paintEnvent, draw window backgroud
+    void paintEvent(QPaintEvent *);
+
 private:
     Ui::MainWindow *ui;
 };
