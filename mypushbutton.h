@@ -15,6 +15,11 @@ public:
 
     void zoom2();
 
+    // rewrite mouse event
+    void mousePressEvent(QMouseEvent *e);
+
+    void mouseReleaseEvent(QMouseEvent *e);
+
 signals:
 
 private:

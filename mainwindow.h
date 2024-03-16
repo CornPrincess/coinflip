@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "chooselevelscene.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,5 +21,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ChooseLevelScene *chooseLevelSecne = nullptr;
 };
 #endif // MAINWINDOW_H

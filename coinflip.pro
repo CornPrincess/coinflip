@@ -16,13 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    chooselevelscene.cpp \
     main.cpp \
     mainwindow.cpp \
-    mypushbutton.cpp
+    mypushbutton.cpp \
+    playscene.cpp
 
 HEADERS += \
+    chooselevelscene.h \
     mainwindow.h \
-    mypushbutton.h
+    mypushbutton.h \
+    playscene.h
 
 FORMS += \
     mainwindow.ui

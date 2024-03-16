@@ -4,6 +4,7 @@
 #include "QPainter"
 #include "mypushbutton.h"
 #include "QDebug"
+#include "QTimer"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,6 +21,13 @@ MainWindow::MainWindow(QWidget *parent)
         this->close();
     });
 
+    chooseLevelSecne = new ChooseLevelScene(this);
+    // listent to signal
+    connect(chooseLevelSecne, &ChooseLevelScene::backToMainWindow, [=](){
+        chooseLevelSecne->hide();
+        this->show();
+    });
+
     // 2. set start button
     MyPushButton *startBtn = new MyPushButton(":/res/MenuSceneStartButton.png");
     startBtn->setParent(this);
@@ -28,6 +36,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(startBtn, &MyPushButton::clicked, [=](){
         startBtn->zoom1();
         startBtn->zoom2();
+
+        QTimer::singleShot(280, this, [=](){
+            this->hide();
+            chooseLevelSecne->show();
+        });
     });
 }
 

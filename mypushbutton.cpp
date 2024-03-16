@@ -37,3 +37,35 @@ void MyPushButton::zoom2() {
     animation->setEasingCurve(QEasingCurve::OutBounce);
     animation->start();
 }
+
+void MyPushButton::mousePressEvent(QMouseEvent *e) {
+    if (this->_pressImg != "") {
+        QPixmap pix;
+        if(!pix.load(_pressImg)) {
+            qDebug() << "load _pressImg fail.";
+            return;
+        }
+
+        this->setFixedSize(pix.width(), pix.height());
+        this->setStyleSheet("QPushButton{border:0px;}");
+        this->setIcon(pix);
+        this->setIconSize(QSize(pix.width(), pix.height()));
+    }
+    return QPushButton::mousePressEvent(e);
+}
+
+void MyPushButton::mouseReleaseEvent(QMouseEvent *e) {
+    if (this->_noramlImg != "") {
+        QPixmap pix;
+        if(!pix.load(_noramlImg)) {
+            qDebug() << "load _noramlImg fail.";
+            return;
+        }
+
+        this->setFixedSize(pix.width(), pix.height());
+        this->setStyleSheet("QPushButton{border:0px;}");
+        this->setIcon(pix);
+        this->setIconSize(QSize(pix.width(), pix.height()));
+    }
+    return QPushButton::mouseReleaseEvent(e);
+}
