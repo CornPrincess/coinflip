@@ -2,6 +2,7 @@
 #define PLAYSCENE_H
 
 #include <QMainWindow>
+#include "coin.h"
 
 class PlayScene : public QMainWindow
 {
@@ -12,12 +13,15 @@ public:
     // overwrite paintEnvent, draw window backgroud
     void paintEvent(QPaintEvent *);
 
+    void judge();
+
 signals:
     void backToChooseWindow();
 
 private:
     int _level_id;
-
+    int _coin_id_array[4][4];
+    Coin* _coin_btn_array[4][4];
 };
 
 #endif // PLAYSCENE_H

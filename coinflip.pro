@@ -17,6 +17,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     chooselevelscene.cpp \
+    coin.cpp \
+    dataconfig.cpp \
     main.cpp \
     mainwindow.cpp \
     mypushbutton.cpp \
@@ -24,6 +26,8 @@ SOURCES += \
 
 HEADERS += \
     chooselevelscene.h \
+    coin.h \
+    dataconfig.h \
     mainwindow.h \
     mypushbutton.h \
     playscene.h

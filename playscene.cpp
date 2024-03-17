@@ -4,6 +4,9 @@
 #include "mypushbutton.h"
 #include "QTimer"
 #include "QLabel"
+#include "coin.h"
+#include "dataconfig.h"
+#include "QDebug"
 
 PlayScene::PlayScene(int level_id, QWidget *parent) : QMainWindow(parent)
 {
@@ -46,6 +49,61 @@ PlayScene::PlayScene(int level_id, QWidget *parent) : QMainWindow(parent)
     QString str2 = QString("Level: %1").arg(level_id + 1);
     label->setText(str2);
     label->setGeometry(30, this->height() - 50, 120, 50);
+
+    // 5. set coins
+    DataConfig config;
+
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            QLabel *label = new QLabel();
+            QPixmap pix(":/res/BoardNode.png");
+            label->setGeometry(0, 0, pix.width(), pix.height());
+            label->setPixmap(pix);
+            label->setParent(this);
+            label->move(58 + i * 50, 200 + j * 50);
+
+            QString coin_img;
+            int coin_flag = config._data[this->_level_id][i][j];
+            this->_coin_id_array[i][j] = coin_flag;
+
+            if (coin_flag == 1) {
+                coin_img = QString(":/res/Coin0001.png");
+            } else if (coin_flag == 0) {
+                coin_img = QString(":/res/Coin0008.png");
+            } else {
+                qDebug() << "Error, coin config is mess.";
+            }
+            Coin *coin = new Coin(coin_img, this);
+            coin->setX(i);
+            coin->setY(j);
+            coin->setFlag(coin_flag);
+            coin->move(60 + i * 50, 203 + j * 50);
+            this->_coin_btn_array[i][j] = coin;
+
+            connect(coin, &QPushButton::clicked, [=](){
+                coin->flip();
+                this->_coin_id_array[i][j] = this->_coin_id_array[i][j] ? 0 : 1;
+
+                // filp around coin
+                int deltX[4] = {1, 0, -1, 0};
+                int delty[4] = {0, 1, 0, -1};
+                for (int i = 0; i < 4; i++) {
+                    int x = coin->getX() + deltX[i];
+                    int y = coin->getY() + delty[i];
+                    if (x >= 0 && x < 4 && y >= 0 && y < 4) {
+                        QTimer::singleShot(100, this, [=](){
+                            auto cb = this->_coin_btn_array[x][y];
+                            cb->flip();
+                            this->_coin_id_array[x][y] = this->_coin_id_array[x][y] ? 0 : 1;
+                        });
+                    }
+                }
+
+                // judge whether win
+                this->judge();
+            });
+        }
+    }
 }
 
 void PlayScene::paintEvent(QPaintEvent *) {
@@ -56,4 +114,25 @@ void PlayScene::paintEvent(QPaintEvent *) {
 
     pix.load(":/res/Title.png");
     painter.drawPixmap((this->width() - pix.width()) / 2, 30, pix.width(), pix.height(), pix);
+}
+
+void PlayScene::judge() {
+    bool win = true;
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            if (!this->_coin_btn_array[i][j]->getFlag()) {
+                win = false;
+                break;
+            }
+        }
+    }
+
+    if (win) {
+        qDebug() << "bingo!!!";
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                this->_coin_btn_array[i][j]->setCanFlip(false);
+            }
+        }
+    }
 }
