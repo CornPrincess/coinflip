@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent)
     chooseLevelSecne = new ChooseLevelScene(this);
     // listent to signal
     connect(chooseLevelSecne, &ChooseLevelScene::backToMainWindow, [=](){
+        this->setGeometry(chooseLevelSecne->geometry());
         chooseLevelSecne->hide();
         this->show();
     });
@@ -41,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent)
         startBtn->zoom2();
 
         QTimer::singleShot(280, this, [=](){
+            // set location
+            chooseLevelSecne->setGeometry(this->geometry());
             this->hide();
             chooseLevelSecne->show();
         });

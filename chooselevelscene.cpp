@@ -51,9 +51,11 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
 
             this->hide();
             level = new PlayScene(i, this);
+            level->setGeometry(this->geometry());
             level->show();
 
             connect(level, &PlayScene::backToChooseWindow, [=](){
+                this->setGeometry(level->geometry());
 //                level->hide();
                 // core need to delete level
                 delete level;
