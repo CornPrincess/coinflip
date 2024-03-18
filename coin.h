@@ -43,6 +43,7 @@ public:
     void mousePressEvent(QMouseEvent *e);
 
 signals:
+    void finishFlip();
 
 private:
     void setIconByImageStr(QString str);

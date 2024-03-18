@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "coin.h"
+#include "QLabel"
 
 class PlayScene : public QMainWindow
 {
@@ -15,6 +16,10 @@ public:
 
     void judge();
 
+    void lockCoin();
+
+    void unlockCoin();
+
 signals:
     void backToChooseWindow();
 
@@ -22,6 +27,7 @@ private:
     int _level_id;
     int _coin_id_array[4][4];
     Coin* _coin_btn_array[4][4];
+    QLabel * _win_label;
 };
 
 #endif // PLAYSCENE_H

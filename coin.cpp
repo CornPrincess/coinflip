@@ -14,6 +14,8 @@ Coin::Coin(QString btn_img, QWidget *parent) : QPushButton(parent)
                 _min = 1;
                 _timer->stop();
                 _flag = !_flag;
+                qDebug() << "on to off finish";
+                emit finishFlip();
            }
         } else {
             QString s = QString(":/res/Coin000%1.png").arg(_max--);
@@ -22,6 +24,8 @@ Coin::Coin(QString btn_img, QWidget *parent) : QPushButton(parent)
                 _max = 8;
                 _timer->stop();
                 _flag = !_flag;
+                qDebug() << "off to on finish";
+                emit finishFlip();
            }
         }
     });
@@ -29,6 +33,7 @@ Coin::Coin(QString btn_img, QWidget *parent) : QPushButton(parent)
 
 void Coin::flip() {
     this->_timer->start(30);
+//    emit finishFlip();
 //    _flag = !_flag;
 }
 
