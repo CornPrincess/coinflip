@@ -8,6 +8,7 @@
 #include "dataconfig.h"
 #include "QDebug"
 #include "QPropertyAnimation"
+#include "QSound"
 
 PlayScene::PlayScene(int level_id, QWidget *parent) : QMainWindow(parent)
 {
@@ -30,11 +31,13 @@ PlayScene::PlayScene(int level_id, QWidget *parent) : QMainWindow(parent)
     });
 
     // 3. set back button
+    QSound *backSound = new QSound(":/res/BackButtonSound.wav");
     MyPushButton *backBtn = new MyPushButton(":/res/BackButton.png", ":/res/BackButtonSelected.png");
     backBtn->setParent(this);
     backBtn->move(this->width() - backBtn->width(), this->height() - backBtn->height());
 
     connect(backBtn, &MyPushButton::clicked, [=](){
+        backSound->play();
         QTimer::singleShot(280, [=](){
            emit backToChooseWindow();
         });
@@ -145,6 +148,9 @@ void PlayScene::judge() {
     }
 
     if (win) {
+        QSound *winSound = new QSound(":/res/LevelWinSound.wav");
+        winSound->play();
+
         qDebug() << "bingo!!!";
         lockCoin();
         // show win label

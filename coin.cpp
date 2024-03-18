@@ -1,5 +1,6 @@
 #include "coin.h"
 #include "QDebug"
+#include "QSound"
 
 Coin::Coin(QString btn_img, QWidget *parent) : QPushButton(parent)
 {
@@ -32,6 +33,8 @@ Coin::Coin(QString btn_img, QWidget *parent) : QPushButton(parent)
 }
 
 void Coin::flip() {
+    QSound *flipSound = new QSound(":/res/ConFlipSound.wav");
+    flipSound->play();
     this->_timer->start(30);
 //    emit finishFlip();
 //    _flag = !_flag;

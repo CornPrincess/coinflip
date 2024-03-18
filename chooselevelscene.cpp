@@ -6,6 +6,7 @@
 #include "QLabel"
 #include "QDebug"
 #include "playscene.h"
+#include "QSound"
 
 ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
 {
@@ -25,17 +26,20 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
     });
 
     // 3. set back button
+    QSound *backSound = new QSound(":/res/BackButtonSound.wav");
     MyPushButton *backBtn = new MyPushButton(":/res/BackButton.png", ":/res/BackButtonSelected.png");
     backBtn->setParent(this);
     backBtn->move(this->width() - backBtn->width(), this->height() - backBtn->height());
 
     connect(backBtn, &MyPushButton::clicked, [=](){
+        backSound->play();
         QTimer::singleShot(280, [=](){
            emit backToMainWindow();
         });
     });
 
     // 4. set level icon
+    QSound *chooseSound = new QSound(":/res/TapButtonSound.wav");
     for (int i = 0; i < 20; ++i) {
         MyPushButton *btn = new MyPushButton(":/res/LevelIcon.png");
         btn->setParent(this);
@@ -43,6 +47,7 @@ ChooseLevelScene::ChooseLevelScene(QWidget *parent) : QMainWindow(parent)
 
         connect(btn, &MyPushButton::clicked, [=](){
             qDebug() << "choose " << i + 1;
+            chooseSound->play();
 
             this->hide();
             level = new PlayScene(i, this);

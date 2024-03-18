@@ -5,6 +5,7 @@
 #include "mypushbutton.h"
 #include "QDebug"
 #include "QTimer"
+#include <QSound>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,11 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // 2. set start button
+    QSound *startSound = new QSound(":/res/TapButtonSound.wav");
     MyPushButton *startBtn = new MyPushButton(":/res/MenuSceneStartButton.png");
     startBtn->setParent(this);
     startBtn->move(this->width() * 0.5 - startBtn->width() * 0.5,
                    this->height() * 0.7);
     connect(startBtn, &MyPushButton::clicked, [=](){
+        startSound->play();
         startBtn->zoom1();
         startBtn->zoom2();
 
